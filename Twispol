@@ -1,0 +1,308 @@
+#include <Arduino.h>
+#include <MD_Parola.h>
+#include <MD_MAX72xx.h>
+#include <SPI.h>
+#include <DFRobotDFPlayerMini.h>
+#include "apwifiesp32.h"
+
+void setup() {
+
+initAP("espAP","123456789");//nombre de wifi a generarse y contrasena
+//pinMode(BUILTIN_LED,OUTPUT);
+}
+void loop() {
+
+    loopAP();
+}
+
+#define HARDWARE_TYPE MD_MAX72XX::GENERIC_HW
+#define MAX_DEVICES 5 // 5 blocks
+#define CS_PIN 21
+#define DIN_PIN 23
+#define CLK_PIN 18
+
+HardwareSerial hwSerial(1);
+DFRobotDFPlayerMini dfPlayer;
+
+MD_Parola ledMatrix = MD_Parola(HARDWARE_TYPE,DIN_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
+
+//bt1 = Leon
+//bt2 = Oveja
+//bt3 = Mono
+//bt4 = Pajaros
+//bt5 = Elefante
+//bt6 = Vaca
+//bt7 = Gallo
+//bt8 = Perro
+//bt9 = Caballo
+//bt10 = Toro
+//bt11 = Loro
+//bt12 = Ballena
+//bt13 = Pato
+//bt14 = Orca
+//bt15 = Rinoceronte
+//bt16 = Leon
+//bt17 = Guacamayo
+//bt18 = Cerdo
+//bt19 = Oso
+//bt20 = Leopardo
+//bt21 = Hiena
+//bt22 = Chimpance
+//bt23 = Delfin
+//bt24 = Rana
+
+int bt1 = 13; //Leon
+int bt2 = 12; //Oveja
+int bt3 = 14; //Mono
+int bt4 = 27; //Pajaros
+int bt5 = 26; //Elefante
+int bt6 = 25; //Vaca
+int bt7 = 33; //Gallo
+int bt8 = 32; //Perro
+int bt9 = 15; //Caballo
+
+void setup() {
+  ledMatrix.begin();         // initialize the LED Matrix
+  ledMatrix.setIntensity(0); // set the brightness of the LED matrix display (from 0 to 15)
+  ledMatrix.displayClear();  // clear LED matrix display;
+
+  pinMode(bt1, INPUT_PULLUP);
+  pinMode(bt2, INPUT_PULLUP);
+  pinMode(bt3, INPUT_PULLUP);
+  pinMode(bt4, INPUT_PULLUP);
+  pinMode(bt5, INPUT_PULLUP);
+  pinMode(bt6, INPUT_PULLUP);
+  pinMode(bt7, INPUT_PULLUP);
+  pinMode(bt8, INPUT_PULLUP);
+  pinMode(bt9, INPUT_PULLUP);
+  /*pinMode(bt10, INPUT_PULLUP);
+  pinMode(bt11, INPUT_PULLUP);
+  pinMode(bt12, INPUT_PULLUP);
+  pinMode(bt13, INPUT_PULLUP);
+  pinMode(bt14, INPUT_PULLUP);
+  pinMode(bt15, INPUT_PULLUP);
+  pinMode(bt16, INPUT_PULLUP);
+  pinMode(bt17, INPUT_PULLUP);
+  pinMode(bt18, INPUT_PULLUP);
+  pinMode(bt19, INPUT_PULLUP);
+  pinMode(bt20, INPUT_PULLUP);
+  pinMode(bt21, INPUT_PULLUP);
+  pinMode(bt22, INPUT_PULLUP);
+  pinMode(bt23, INPUT_PULLUP);
+  pinMode(bt24, INPUT_PULLUP);*/
+
+  hwSerial.begin(9600, SERIAL_8N1, 19, 4);  // speed, type, TX, RX
+  Serial.begin(115200);
+
+  dfPlayer.begin(hwSerial);  //Use softwareSerial to communicate with mp3
+  dfPlayer.setTimeOut(500); //Set serial communication time out 500ms
+  dfPlayer.volume(30);  //Set volume value (0~30).
+  dfPlayer.EQ(DFPLAYER_EQ_NORMAL);
+  dfPlayer.outputDevice(DFPLAYER_DEVICE_SD);
+
+  ledMatrix.setTextAlignment(PA_CENTER);
+  ledMatrix.print("HOLA"); // display text
+  delay(1000);
+}
+
+void loop() {
+  ledMatrix.setTextAlignment(PA_CENTER);
+  ledMatrix.print("PULSAR"); // display text
+  
+  // put your main code here, to run repeatedly:
+    if(digitalRead(bt1) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Caballo"); // display text
+      dfPlayer.play(1);
+      delay(3000);
+      ledMatrix.displayClear(); 
+      
+    }
+    else if(digitalRead(bt2) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Tigre"); // display text
+      dfPlayer.play(2);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt3) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Oveja"); // display text
+      dfPlayer.play(3);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt4) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Mono"); // display text
+      dfPlayer.play(4);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt5) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Pajaro"); // display text
+      dfPlayer.play(5);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt6) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Elefante"); // display text
+      dfPlayer.play(6);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt7) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Vaca"); // display text
+      dfPlayer.play(7);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt8) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Gallo"); // display text
+      dfPlayer.play(8);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt9) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Perro"); // display text
+      dfPlayer.play(9);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    /*
+    else if(digitalRead(bt10) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Toro"); // display text
+      dfPlayer.play(10);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt11) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Loro"); // display text
+      dfPlayer.play(11);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt12) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Ballena"); // display text
+      dfPlayer.play(12);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt13) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Pato"); // display text
+      dfPlayer.play(13);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt14) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Orca"); // display text
+      dfPlayer.play(14);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt15) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Rinoceronte"); // display text
+      dfPlayer.play(15);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt16) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Leon"); // display text
+      dfPlayer.play(16);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt17) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Guacamayo"); // display text
+      dfPlayer.play(17);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt18) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Cerdo"); // display text
+      dfPlayer.play(18);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt19) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Oso"); // display text
+      dfPlayer.play(19);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt20) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Leopardo"); // display text
+      dfPlayer.play(20);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt21) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Hiena"); // display text
+      dfPlayer.play(21);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt22) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Chimpance"); // display text
+      dfPlayer.play(2);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt23) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Delfin"); // display text
+      dfPlayer.play(23);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }
+    else if(digitalRead(bt24) == 0)
+    {
+      ledMatrix.setTextAlignment(PA_CENTER);
+      ledMatrix.print("Rana"); // display text
+      dfPlayer.play(24);
+      delay(3000);
+      ledMatrix.displayClear(); 
+    }*/
+}
+
